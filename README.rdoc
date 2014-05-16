@@ -1,0 +1,6 @@
+= mamp
+
+Describe your project here
+
+:include:mamp.rdoc
+
