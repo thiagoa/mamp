@@ -18,10 +18,12 @@ ServerRunner.add_server Server.new(:mysql,  'MySQL')
 apache_command = 'sudo /usr/sbin/apachectl'
 mysql_command  = '/usr/local/bin/mysql.server'
 
-ServerRunner.add_command Command.new(:start, :apache, "#{apache_command} start", 'Starting')
-ServerRunner.add_command Command.new(:start, :mysql,  "#{mysql_command} start",  'Starting')
-ServerRunner.add_command Command.new(:stop,  :apache, "#{apache_command} stop",  'Stopping')
-ServerRunner.add_command Command.new(:stop,  :mysql,  "#{mysql_command} stop",   'Stopping')
+ServerRunner.add_command Command.new(:start,   :apache, "#{apache_command} start",   'Starting')
+ServerRunner.add_command Command.new(:start,   :mysql,  "#{mysql_command} start",    'Starting')
+ServerRunner.add_command Command.new(:stop,    :apache, "#{apache_command} stop",    'Stopping')
+ServerRunner.add_command Command.new(:stop,    :mysql,  "#{mysql_command} stop",     'Stopping')
+ServerRunner.add_command Command.new(:restart, :apache, "#{apache_command} restart", 'Restarting')
+ServerRunner.add_command Command.new(:restart, :mysql,  "#{mysql_command} restart",  'Restarting')
 
 ServerRunner.command_actions.each do |command|
   ServerRunner.server_ids.each do |server|
