@@ -34,4 +34,27 @@ module Mamp
   def supported_servers
     "Supported servers: #{ServerRunner.servers.map(&:id).join(', ')}."
   end
+
+  def run_servers!(action, server_ids, global_flags, stdout = $stdout)
+    detect_invalid_servers! server_ids
+    register_commands! global_flags
+
+    server_ids = ServerRunner.server_ids if server_ids.empty?
+
+    runners = server_ids.map do |server_id|
+      ServerRunner.new(server_id, action)
+    end
+
+    runners.each do |runner|
+      stdout.puts "#{runner.command.present_participle} " +
+                  "#{runner.server.description}..."
+
+      runner.run!
+
+      unless runner.success?
+        $stderr.puts "There was a problem running #{command}:"
+        $stderr.puts runner.error
+      end
+    end
+  end
 end
