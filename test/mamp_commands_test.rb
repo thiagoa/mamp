@@ -31,5 +31,8 @@ class MampCommandsTest < Test::Unit::TestCase
       :'stop-apache-command' => 'sudo /usr/sbin/apachectl stop',
       :'start-mysql-command' => 'sudo /usr/local/bin/mysql.server start',
     })
+
+    ServerRunner.find_command! :stop,  :apache
+    ServerRunner.find_command! :start, :mysql
   end
 end
