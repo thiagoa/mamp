@@ -3,32 +3,41 @@ require 'gli'
 require 'mamp'
 
 include GLI::App
+include Mamp
 
-SUPPORTED_SERVERS = %w(apache mysql)
-$servers_desc = "Supported servers: #{SUPPORTED_SERVERS.join(', ')}.";
+config_file File.join(ENV['HOME'], '.mamprc.yaml')
 
 program_desc 'Web development with Apache, PHP and MySQL. This app ' +
              'provides an unified interface for common tasks.'
 
-version Mamp::VERSION
+version VERSION
 
-desc "Start specified servers. #{$servers_desc}"
-arg_name 'server_name'
-command :start do |c|
-  c.desc 'Describe a flag to start'
+ServerRunner.add_server Server.new(:apache, 'Apache')
+ServerRunner.add_server Server.new(:mysql,  'MySQL')
 
-  c.action do |global_options, options, args|
-    servers = args || SUPPORTED_SERVERS
-    puts "Starting servers: #{servers.join(', ')}"
+apache_command = 'sudo /usr/sbin/apachectl'
+mysql_command  = '/usr/local/bin/mysql.server'
+
+ServerRunner.add_command Command.new(:start, :apache, "#{apache_command} start", 'Starting')
+ServerRunner.add_command Command.new(:start, :mysql,  "#{mysql_command} start",  'Starting')
+ServerRunner.add_command Command.new(:stop,  :apache, "#{apache_command} stop",  'Stopping')
+ServerRunner.add_command Command.new(:stop,  :mysql,  "#{mysql_command} stop",   'Stopping')
+
+ServerRunner.command_actions.each do |command|
+  ServerRunner.server_ids.each do |server|
+    desc "Command to #{command} #{server} server "
+    arg_name 'shell_command'
+    found_command = ServerRunner.find_command!(command, server)
+    default_value found_command.command
+    flag build_command_flag(found_command)
   end
-end
 
-desc "Stop specified servers. Supported servers: #{$servers_desc}"
-arg_name 'server_name'
-command :stop do |c|
-  c.action do |global_options, options, args|
-    servers = args || SUPPORTED_SERVERS
-    puts "Stopping servers: #{servers.join(', ')}"
+  desc "#{command.capitalize} specified servers. #{supported_servers}"
+  arg_name 'server_name'
+  command command do |c|
+    c.action do |global_options, options, args|
+      run_servers! command, args, global_options
+    end
   end
 end
 
