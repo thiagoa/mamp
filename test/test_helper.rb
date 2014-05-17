@@ -6,5 +6,5 @@ require 'mocha/test_unit'
 class Test::Unit::TestCase
 
   # Add global extensions to the test case class here
-  
+
 end
