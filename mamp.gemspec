@@ -11,13 +11,10 @@ spec = Gem::Specification.new do |s|
   s.files = `git ls-files`.split("
 ")
   s.require_paths << 'lib'
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README.rdoc','mamp.rdoc']
-  s.rdoc_options << '--title' << 'mamp' << '--main' << 'README.rdoc' << '-ri'
+  s.has_rdoc = false
   s.bindir = 'bin'
   s.executables << 'mamp'
   s.add_development_dependency('rake')
-  s.add_development_dependency('rdoc')
   s.add_development_dependency('aruba')
   s.add_runtime_dependency('gli','2.10.0')
 end
