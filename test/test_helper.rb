@@ -1,4 +1,5 @@
 require 'test/unit'
+require 'mocha/test_unit'
 
 # Add test libraries you want to use here, e.g. mocha
 

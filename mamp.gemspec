@@ -16,5 +16,6 @@ spec = Gem::Specification.new do |s|
   s.executables << 'mamp'
   s.add_development_dependency('rake')
   s.add_development_dependency('aruba')
+  s.add_development_dependency('mocha')
   s.add_runtime_dependency('gli','2.10.0')
 end
