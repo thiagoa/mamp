@@ -38,12 +38,8 @@ class ServerTest < Test::Unit::TestCase
   end
 
   def teardown
-    ServerRunner.remove_server! @apache
-    ServerRunner.remove_server! @postgresql
-
-    ServerRunner.remove_command! @stop_mysql
-    ServerRunner.remove_command! @start_postgres
-    ServerRunner.remove_command! @stop_apache
+    ServerRunner.remove_servers!
+    ServerRunner.remove_commands!
   end
 
   def test_it_finds_an_existing_server

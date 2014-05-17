@@ -13,8 +13,8 @@ class MampCommandsTest < Test::Unit::TestCase
   end
 
   def teardown
-    ServerRunner.remove_server! @apache
-    ServerRunner.remove_command! @start_apache
+    ServerRunner.remove_servers!
+    ServerRunner.remove_commands!
   end
 
   def test_it_fails_when_dealing_with_invalid_servers
@@ -31,8 +31,5 @@ class MampCommandsTest < Test::Unit::TestCase
       :'stop-apache-command' => 'sudo /usr/sbin/apachectl stop',
       :'start-mysql-command' => 'sudo /usr/local/bin/mysql.server start',
     })
-
-    ServerRunner.remove_command! ServerRunner.find_command!(:stop,  :apache)
-    ServerRunner.remove_command! ServerRunner.find_command!(:start, :mysql)
   end
 end

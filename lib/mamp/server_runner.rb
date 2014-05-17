@@ -17,8 +17,8 @@ module Mamp
       servers.map(&:id)
     end
 
-    def self.remove_server!(server)
-      servers.delete(server)
+    def self.remove_servers!
+      @servers = nil
     end
 
     def self.find_server!(id)
@@ -65,8 +65,8 @@ module Mamp
       command
     end
 
-    def self.remove_command!(command)
-      commands.delete command
+    def self.remove_commands!
+      @commands = nil
     end
 
     attr_reader :server, :command, :out, :error
